@@ -25,8 +25,18 @@ function numberEnv(name, fallback = 0) {
   return parsed;
 }
 
+function splitList(value) {
+  return value
+    .replace(/\\n/g, "\n")
+    .split(/[,;\n]/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
 function loadConfig({ requireChats = true } = {}) {
   const relayMode = optional("RELAY_MODE", "forward").toLowerCase();
+  const sourceChatRaw = optional("SOURCE_CHATS") || optional("SOURCE_CHAT");
+  const sourceChats = splitList(sourceChatRaw);
 
   if (!["forward", "copy"].includes(relayMode)) {
     throw new Error("RELAY_MODE harus forward atau copy.");
@@ -36,7 +46,7 @@ function loadConfig({ requireChats = true } = {}) {
     apiId: Number(required("TELEGRAM_API_ID")),
     apiHash: required("TELEGRAM_API_HASH"),
     stringSession: optional("TELEGRAM_STRING_SESSION"),
-    sourceChat: optional("SOURCE_CHAT"),
+    sourceChats,
     targetChat: optional("TARGET_CHAT"),
     relayMode,
     matchRegex: optional("MATCH_REGEX"),
@@ -48,7 +58,7 @@ function loadConfig({ requireChats = true } = {}) {
   }
 
   if (requireChats) {
-    if (!config.sourceChat) {
+    if (config.sourceChats.length === 0) {
       throw new Error("Missing SOURCE_CHAT.");
     }
 

@@ -29,6 +29,12 @@ Bot API biasanya tidak bisa membaca channel sumber yang bukan milik Anda. Dengan
    RELAY_MODE=forward
    ```
 
+   Untuk lebih dari satu source, pisahkan dengan koma:
+
+   ```env
+   SOURCE_CHAT=@source1,@source2,-1001234567890
+   ```
+
 5. Login akun Telegram untuk membuat session:
 
    ```bash
