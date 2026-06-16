@@ -1,0 +1,26 @@
+{
+  "name": "telegram-chat-forwarder",
+  "version": "1.0.0",
+  "description": "Read messages from a Telegram channel with a user account and relay them to another channel using GramJS.",
+  "main": "src/forwarder.js",
+  "scripts": {
+    "login": "node src/login.js",
+    "dialogs": "node src/list-dialogs.js",
+    "start": "node src/forwarder.js",
+    "pm2:start": "pm2 start ecosystem.config.cjs",
+    "pm2:logs": "pm2 logs telegram-chat-forwarder",
+    "pm2:restart": "pm2 restart telegram-chat-forwarder",
+    "pm2:stop": "pm2 stop telegram-chat-forwarder"
+  },
+  "keywords": [
+    "telegram",
+    "gramjs",
+    "forwarder"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "input": "^1.0.1",
+    "telegram": "^2.26.22"
+  }
+}
